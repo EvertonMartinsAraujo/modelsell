@@ -5,17 +5,21 @@
         <div class="nome-usuario">
           Olá, {{ user.name }}<br>
         </div>
-        <div class="cabecalho-busca">
+        <div class="cabecalho-search">
         <input v-model="termoBusca" type="text" placeholder="Pesquisar produtos..."/>
         </div>
-      </header>
-      <div style="width: 100%; text-align: center; margin-top: 40px;" v-if="user && user.role === 'admin'">
-      <button @click="adicionarProd">Adicionar Produto</button>
+        <div>
+        <button style="align-items: end;" @click="logout" class="button">Sair</button>
       </div>
+      </header>
 
+      <div style="width: 100%; text-align: center; margin-top: 40px;" v-if="user && user.role === 'admin'">
+        <button @click="adicionarProd">Adicionar Produto</button>
+      </div>
+              
       <div class="produto-container" v-for="produto in produtosFiltrados" :key="produto.id"><br>
         <div>
-          <img :src="`http://localhost:8000/${produto.imagem}`" v-if="produto.imagem" class="produto-imagem"/>
+          <img :src="`http://localhost:8000/storage/${produto.imagem}`" v-if="produto.imagem" class="produto-imagem"/>
         </div>
         <div style="text-align: center;">
           {{ produto.nome }}<br>
@@ -47,7 +51,7 @@
             </div>
           </div>
         </div>
-        <div><button @click="logout" class="logout-button">Sair</button></div>
+
   </template>
 
   <script>
@@ -194,7 +198,7 @@
     padding: 10px 20px;
     width: 100%;
   }
-.cabecalho-busca{
+.cabecalho-search{
   background: white;
   color: black;
   border: 1px solid #ccc;;
@@ -252,6 +256,7 @@
     transform: scale(1.1); /* Aumenta 10% ao passar o mouse */
   }
 
+ 
   .modal-overlay {
     position: fixed;
     top: 0; left: 0;
