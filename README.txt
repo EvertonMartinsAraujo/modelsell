@@ -17,7 +17,7 @@ Este é um projeto open-source com o objetivo de estruturar uma aplicação de c
 
 1. Clonar o repositório:
 git clone https://github.com/EvertonMartinsAraujo/modelsell.git
-cd modelsell
+cd api-modelsell
 
 2. Instalar dependências do Laravel e Vue
 composer install
@@ -25,24 +25,32 @@ npm install
 npm run build
 
 3. Configurar variáveis de ambiente
-Edite as seguintes variáveis para configurar a conexão com seu banco MySQL:-DB_USERNAME
+3.1. Copie o arquivo ou renomeie .env.exemplo para .env
+cp .env.exemplo .env
+
+3.2. Edite as seguintes variáveis para configurar a conexão com seu banco MySQL:
 DB_DATABASE=nomedobanco
 DB_USERNAME=seu_usuario
 DB_PASSWORD=sua senha
 
-4. Rodar as migrations para criação do schema e tabela no banco de dados
+4. Gerar as Keys e rodar as migrations para criação do schema e tabela no banco de dados
+php artisan key:generate
+php artisan jwt:secret
 php artisan migrate
 
-4.5.OPCIONAL: Alimentar as tabelas com dados fictícios para testes
+
+4.5. OPCIONAL: Alimentar as tabelas com dados fictícios para testes
 php artisan db:seed
 Isso criará alguns usuários e produtos, consulte as tabelas em caso de duvidas
 
 
 ############ Executar aplicação ############
+5. Execute
 php artisan serve
 
 
-
+Você poderá acessar a aplicação no navegador pelo link
+http://localhost:8000/
 
 
 ############ Sobre o projeto ############
