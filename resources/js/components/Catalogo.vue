@@ -1,22 +1,24 @@
   <template>
-    <div class="produtos-wrapper">
-          <!-- Cabeçalho com usuário e pesquisa -->
+    <div class="produtos-page">
+          <!-- Cabeçalho, pesquisa e logout -->
       <header class="cabecalho">
         <div class="nome-usuario">
           Olá, {{ user.name }}<br>
         </div>
+        
         <div class="cabecalho-search">
-        <input v-model="termoBusca" type="text" placeholder="Pesquisar produtos..."/>
+          <input v-model="termoBusca" type="text" placeholder="Pesquisar produtos..."/>
         </div>
+       
         <div>
-        <button style="align-items: end;" @click="logout" class="button">Sair</button>
-      </div>
+          <button style="align-items: end;" @click="logout" class="button">Deslogar</button>
+        </div>
       </header>
-
+      <!--adicionar-->
       <div style="width: 100%; text-align: center; margin-top: 40px;" v-if="user && user.role === 'admin'">
         <button @click="adicionarProd">Adicionar Produto</button>
       </div>
-              
+       <!--catalogo de produtos-->    
       <div class="produto-container" v-for="produto in produtosFiltrados" :key="produto.id"><br>
         <div>
           <img :src="`http://localhost:8000/storage/${produto.imagem}`" v-if="produto.imagem" class="produto-imagem"/>
@@ -25,34 +27,35 @@
           {{ produto.nome }}<br>
           {{ produto.descricao }}<br>
           R$ {{ produto.preco }}  
+          <!--faz nada kk-->
           <button @click="comprar(produto)">Comprar</button>
-          <!--para adm -->
+          
+          <!--so aparece para adm -->
           <div v-if="user && user.role === 'admin'">
             <button @click="editar(produto)">Editar</button>
             <button @click="deletar(produto.id)">Excluir</button>
           </div>
           
-          <!-- tela para adição ou edição-->
-        <div v-if="produtoForm" class="modal-overlay">
-        <div class="modal-content">
-        <h2>{{ modoEdicao ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
-          <label>Nome:</label>
-          <input v-model="produtoForm.nome"><br>
-          <label>Descrição:</label>
-          <input v-model="produtoForm.descricao"><br>
-          <label>Preço:</label>
-          <input type="number" v-model="produtoForm.preco"><br>
-          <label>Imagem:</label>
-          <input type="file" @change="handleImagemChange"><br>
-      <button @click="salvarProduto">{{ modoEdicao ? 'Salvar Alterações' : 'Cadastrar Produto' }}</button>
-      <button @click="cancelarFormulario">Cancelar</button>
-    </div>
-  </div>
-            </div>
+          <!--modal para adição ou edição-->
+          <div v-if="produtoForm" class="modal-overlay">
+          <div class="modal-content">
+            <h2 style="text-align: center;">{{ modoEdicao ? 'Editar Produto' : 'Adicionar Produto' }}</h2>
+            <label class="modal-desc">Nome:  </label>
+              <input class="modal-search" type="text" v-model="produtoForm.nome"><br>
+            <label class="modal-desc">Descrição:  </label>
+              <input class="modal-search" type="text" v-model="produtoForm.descricao"><br>
+            <label class="modal-desc">Preço:  </label>
+              <input class="modal-search" type="number" v-model="produtoForm.preco"><br>
+            <label class="modal-desc">Imagem:  </label>
+              <input class="modal-search" type="file" @change="handleImagemChange"><br>
+            <button @click="salvarProduto">{{ modoEdicao ? 'Salvar Alterações' : 'Cadastrar Produto' }}</button>
+            <button @click="cancelarFormulario">Cancelar</button>
           </div>
         </div>
-
-  </template>
+      </div>
+    </div>
+  </div>
+</template>
 
   <script>
   import axios from 'axios'
@@ -71,7 +74,7 @@
     },
 
     computed: {
-      produtosFiltrados() {
+      produtosFiltrados() {//le e retorna o conteudo da pesquisa
         const termo = this.termoBusca.toLowerCase();
 
         return this.produtos.filter(produto => {
@@ -84,23 +87,24 @@
       }
     },
 
-    async mounted() {
+    async mounted() {//para token 
       const token = localStorage.getItem('token')
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+     //para produtos
       const prodRes = await axios.get('http://localhost:8000/api/produto')
       this.produtos = prodRes.data
+      //para verificar quem esta logado
       const userRes = await axios.post('http://localhost:8000/api/auth/me')
       this.user = userRes.data
-      console.log("Usuário logado:", this.user)
     },
 
-    methods: {
+    methods: {//excluir
       async deletar(id) {
         await axios.delete(`http://localhost:8000/api/produto/${id}`)
         this.produtos = this.produtos.filter(p => p.id !== id)
       },
 
-      adicionarProd() {
+      adicionarProd() {//adicionar produto
         this.produtoForm = {
           nome: '',
           descricao: '',
@@ -110,30 +114,30 @@
         this.modoEdicao = false;
       },
 
-      editar(produto) {
+      editar(produto) {//editar
         this.produtoForm = { ...produto };
         this.imagemSelecionada = null;
         this.modoEdicao = true;
       },
 
-      cancelarFormulario() {
+      cancelarFormulario() {//cancelar
         this.produtoForm = null;
         this.imagemSelecionada = null;
         this.modoEdicao = false;
       },
 
-      handleImagemChange(event) {
+      handleImagemChange(event) {//para alteraçao de imagem
         this.imagemSelecionada = event.target.files[0];
       },
 
-      async salvarProduto() {
+      async salvarProduto() {//salva
         const form = new FormData();
         form.append('nome', this.produtoForm.nome);
         form.append('descricao', this.produtoForm.descricao);
         form.append('preco', this.produtoForm.preco);
         if (this.imagemSelecionada) {
           form.append('imagem', this.imagemSelecionada);
-        }
+        };
 
         try {
           if (this.modoEdicao) {
@@ -227,7 +231,7 @@
     border: 1px solid #444;
   }
 
-  .produtos-wrapper {
+  .produtos-page {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -257,21 +261,37 @@
   }
 
  
-  .modal-overlay {
+  .modal-overlay {  
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(51, 50, 50, 0.3);
     display: flex; justify-content: center; align-items: center;
     z-index: 1000;
   }
 
   .modal-content {
     color: black;
-    background: white;
+    background: rgb(179, 178, 178);
+    text-align: left;
     padding: 40px;
     border-radius: 8px;
     min-width: 300px;
   }
 
+  .modal-desc {
+    display: flex;
+    justify-content: space-between;
+    width: 100px; 
+    align-items: left;
+    margin-right: 10px;
+  }
+  
+  .modal-search {
+    flex: 1;
+    padding: 8px;
+    margin: 8px 0;
+    background-color: white;
+    border: 1px solid #ccc;
+  }
   </style>
