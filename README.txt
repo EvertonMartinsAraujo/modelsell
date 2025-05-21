@@ -39,10 +39,13 @@ php artisan jwt:secret
 php artisan migrate
 
 
-4.5. OPCIONAL: Alimentar as tabelas com dados fictícios para testes
+5.Alimentar as tabelas com dados fictícios para testes
 php artisan db:seed
 Isso criará alguns usuários e produtos, consulte as tabelas em caso de duvidas
 
+
+****ATENÇÃO*****
+Se não executar o item 5 será necessário criar o usuário diretamente no banco para conseguir logar na aplicação
 
 ############ Executar aplicação ############
 5. Execute
