@@ -1,66 +1,66 @@
-<<<<<<< HEAD
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+ModelSell Catálogo de Produtos (Laravel + Vue3)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Projeto API RESTful com Laravel 10 no backend e Vue 3 (Vite) no frontend.
 
-## About Laravel
+Este é um projeto open-source com o objetivo de estruturar uma aplicação de catálogo de produtos. É necessário realizar login para acessar os produtos. Apenas usuários com privilégio admin podem adicionar, editar e excluir produtos.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+############ Requisitos ############
 
-## Learning Laravel
+- PHP 8.1+
+- Composer
+- MySQL
+- Node.js 18 ou superior
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+############ Instalação ############
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clonar o repositório:
+git clone https://github.com/EvertonMartinsAraujo/modelsell.git
+cd api-modelsell
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. Instalar dependências do Laravel e Vue
+composer install
+npm install
+npm run build
 
-## Laravel Sponsors
+3. Configurar variáveis de ambiente
+3.1. Copie o arquivo ou renomeie .env.exemplo para .env
+cp .env.exemplo .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3.2. Edite as seguintes variáveis para configurar a conexão com seu banco MySQL:
+DB_DATABASE=nomedobanco
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua senha
 
-### Premium Partners
+4. Gerar as Keys e rodar as migrations para criação do schema e tabela no banco de dados
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
+5.Alimentar as tabelas com dados fictícios para testes
+php artisan db:seed
+Isso criará alguns usuários e produtos, consulte as tabelas em caso de duvidas
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+****ATENÇÃO*****
+Se não executar o item 5 será necessário criar o usuário diretamente no banco para conseguir logar na aplicação
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+6.Crie um link de conexão do storage a pasta public, para que as imagens upadas fiquem acessíveis e visíveis
+php artisan storage:link
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+############ Executar aplicação ############
+7. Execute
+php artisan serve
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-=======
-# modelsell
-api-catalogo php laravel e vue js
->>>>>>> 95834bcd8dad5e6144aaa7dfa7371a4f5db68fb7
+
+Você poderá acessar a aplicação no navegador pelo link
+http://localhost:8000/
+
+
+############ Sobre o projeto ############
+
+Projeto desenvolvido por Everton M. Araujo, para finalidade de pratica e estudo.
